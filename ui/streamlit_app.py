@@ -5,7 +5,7 @@ import base64
 st.set_page_config(page_title="VisionAI", page_icon="🤖")
 st.title("VisionAI — Accessibility Assistant")
 
-API_URL = "http://backend:8000/Agent"
+API_URL = "https://aaaadddittyyaaa-agent-space.hf.space/Agent"
 
 mode = st.radio("Mode", ["Caption Image", "Ask Question"], horizontal=True)
 
