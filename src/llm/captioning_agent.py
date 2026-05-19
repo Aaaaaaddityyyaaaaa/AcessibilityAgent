@@ -10,8 +10,13 @@ from src.llm.state import State
 
 config = read_yaml(CONFIG_PATH)
 
+_original_torch_load = torch.load
+torch.load = lambda *args, **kwargs: _original_torch_load(*args, **{**kwargs, 'map_location': torch.device('cpu')})
+
 f_model = joblib.load(config.feature_extractor.path)
 decoder_model = Model(CONFIG_PATH)
+
+torch.load = _original_torch_load
 
 decoder_weights = joblib.load(config.training.save_path)
 decoder_model.projection.load_state_dict(decoder_weights["projection"])
