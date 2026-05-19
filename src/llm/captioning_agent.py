@@ -4,19 +4,23 @@ from src.utils.common import read_yaml
 from src.constants import CONFIG_PATH
 from src.captioninng_model.get_gpt2_decoder import Model
 import torch
+import torch.serialization
 from data.image_preprocess import preprocess_64
 from langchain_core.tools import tool
 from src.llm.state import State
 
 config = read_yaml(CONFIG_PATH)
 
-_original_torch_load = torch.load
-torch.load = lambda *args, **kwargs: _original_torch_load(*args, **{**kwargs, 'map_location': torch.device('cpu')})
+def _cpu_restore_location(storage, location):
+    return storage
+
+torch.serialization.default_restore_location = _cpu_restore_location
+
 
 f_model = joblib.load(config.feature_extractor.path)
 decoder_model = Model(CONFIG_PATH)
 
-torch.load = _original_torch_load
+
 
 decoder_weights = joblib.load(config.training.save_path)
 decoder_model.projection.load_state_dict(decoder_weights["projection"])
