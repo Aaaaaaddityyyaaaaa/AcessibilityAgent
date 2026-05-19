@@ -34,7 +34,7 @@ RUN dvc remote modify origin --local auth basic && \
 
 RUN dvc pull
 
-EXPOSE 8000
+EXPOSE 7860
 
-CMD [ "uvicorn" , "api.api:app" , "--host" ,"0.0.0.0" , "--port" ,"8000"]
+CMD [ "uvicorn" , "api.api:app" , "--host" ,"0.0.0.0" , "--port" ,"7860"]
 
