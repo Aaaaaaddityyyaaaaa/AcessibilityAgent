@@ -1,0 +1,30 @@
+services :
+  backend :
+    build :
+      context: .
+      dockerfile : Dockerfile
+      args :
+        DAGSHUB_USERNAME: ${DAGSHUB_USERNAME}
+        DAGSHUB_TOKEN: ${DAGSHUB_TOKEN}
+
+    ports:
+      - "8000:8000"
+
+    restart : always
+
+  
+
+  frontend:
+    image: python:3.13-slim
+    working_dir: /frontend
+    volumes:
+      - ./ui:/frontend
+    command: >
+      sh -c "pip install -r requirementsFrontend.txt &&
+      streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0"
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+
+

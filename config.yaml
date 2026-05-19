@@ -1,0 +1,17 @@
+data :
+  dataset_zipped : "data/dataset/zipped" 
+  images : "data/dataset/zipped/images"
+  captions : "data/dataset/zipped/captions.txt"
+  datasetPkl : "data/dataset/zipped/dataset.pkl"
+
+feature_extractor :
+  path : "model/feature_model/f_model.pkl"
+
+training:
+  batch_size: 32
+  epochs: 10
+  save_path: artifacts/model/decoder.pkl
+
+llm:
+  name: "llama-3.3-70b-versatile"
+  temperature: 0.6

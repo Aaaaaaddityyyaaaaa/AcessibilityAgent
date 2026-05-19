@@ -1,0 +1,7 @@
+.env
+__pycache__
+.Agentic
+/agentic_ai.egg-info
+/data/dataset/zipped
+*.pkl
+.pyc
