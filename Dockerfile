@@ -1,5 +1,7 @@
 FROM python:3.13-slim
 
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /backend
 
 COPY src/ ./src/
@@ -17,7 +19,12 @@ RUN pip install -r requirements.txt
 RUN pip install -e .
 
 # Create entrypoint script
-RUN echo '#!/bin/bash\n\
+
+
+
+
+RUN printf '#!/bin/bash\n\
+git init\n\
 dvc remote modify origin --local auth basic\n\
 dvc remote modify origin --local user $DAGSHUB_USERNAME\n\
 dvc remote modify origin --local password $DAGSHUB_TOKEN\n\
